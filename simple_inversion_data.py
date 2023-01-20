@@ -19,7 +19,7 @@ def generate_X():
     R = np.array([[c,-s], [s, c]])
     l1, l2 = generate_diag_elem(), generate_diag_elem()
     D = np.diag([l1, l2])
-    return R @ D @ R.T
+    return (R @ D @ R.T)
 
 def generate_data(num_samples):
     '''Generate the learning data'''
@@ -27,11 +27,16 @@ def generate_data(num_samples):
     ys = []
     for i in range(num_samples):
         X = generate_X()
+        
+        # If generating data for feedforward network, reshape into vector
+        #Xs.append(np.reshape(X,4))
+        
         Xs.append(X)
         ys.append(f(X))
     return Xs, ys
 
 def save_data(Xs, ys, filename):
+    
     np.savez_compressed(filename, Xs=Xs, ys=ys)
 
 def load_data(filename):
